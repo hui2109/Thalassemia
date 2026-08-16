@@ -1,0 +1,29 @@
+﻿Model,Class,Calibration Slope,Calibration Intercept
+Multinomial Logistic Regression,Control,1.28,-0.115
+Multinomial Logistic Regression,Silent Thalassemia,1.164,-0.043
+Multinomial Logistic Regression,Non-silent Thalassemia,0.654,0.094
+Multinomial Logistic Regression,Iron Deficiency Anemia,0.658,-0.412
+Support Vector Classifier,Control,1.586,-0.657
+Support Vector Classifier,Silent Thalassemia,1.225,0.08
+Support Vector Classifier,Non-silent Thalassemia,1.209,0.551
+Support Vector Classifier,Iron Deficiency Anemia,0.962,-0.377
+Decision Tree,Control,0.403,0.44
+Decision Tree,Silent Thalassemia,0.301,-0.592
+Decision Tree,Non-silent Thalassemia,0.363,0.171
+Decision Tree,Iron Deficiency Anemia,0.277,-0.637
+Random Forest,Control,1.209,-0.114
+Random Forest,Silent Thalassemia,1.185,0.069
+Random Forest,Non-silent Thalassemia,1.092,-0.1
+Random Forest,Iron Deficiency Anemia,0.981,0.152
+XGBoost,Control,1.675,-0.195
+XGBoost,Silent Thalassemia,1.517,0.485
+XGBoost,Non-silent Thalassemia,1.535,-0.207
+XGBoost,Iron Deficiency Anemia,1.335,0.737
+LightGBM,Control,1.136,-0.215
+LightGBM,Silent Thalassemia,1.079,0.121
+LightGBM,Non-silent Thalassemia,1.052,-0.371
+LightGBM,Iron Deficiency Anemia,0.997,0.363
+Multilayer Perceptron,Control,1.158,-0.015
+Multilayer Perceptron,Silent Thalassemia,0.977,-0.064
+Multilayer Perceptron,Non-silent Thalassemia,0.665,0.658
+Multilayer Perceptron,Iron Deficiency Anemia,0.53,-0.791

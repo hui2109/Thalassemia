@@ -1,0 +1,19 @@
+﻿Variable,Train (n=711),Test (n=305),Test Method,P-value
+age,"27.00 [25.00, 31.00]","27.00 [25.00, 31.00]",Kruskal-Wallis H,0.794
+RBC,"4.38 [4.06, 4.80]","4.36 [4.09, 4.76]",Kruskal-Wallis H,0.897
+HB,"120.00 [108.50, 130.00]","121.00 [108.00, 129.00]",Kruskal-Wallis H,0.834
+HCT,"36.90 [34.20, 39.50]",36.64 (3.60),Kruskal-Wallis H,0.656
+MCV,"85.80 [73.10, 91.65]","86.40 [73.50, 91.90]",Kruskal-Wallis H,0.967
+MCH,"28.10 [22.70, 30.60]","28.28 [22.60, 30.70]",Kruskal-Wallis H,0.661
+MCHC,"325.00 [313.00, 334.00]","326.00 [315.00, 336.00]",Kruskal-Wallis H,0.278
+RDW-SD,"42.00 [39.70, 45.10]","42.40 [39.40, 45.00]",Kruskal-Wallis H,0.869
+RDW-CV,"13.70 [12.90, 15.35]","13.80 [13.00, 15.10]",Kruskal-Wallis H,0.623
+PLT,"201.00 [165.00, 243.00]","207.00 [161.00, 248.00]",Kruskal-Wallis H,0.389
+PDW,"16.30 [16.00, 16.60]","16.30 [15.90, 16.70]",Kruskal-Wallis H,0.966
+Shine and Lal(S&L),"2068.83 [1209.23, 2567.34]","2102.79 [1205.60, 2577.99]",Kruskal-Wallis H,0.895
+Mentzer(MI),"19.70 [16.13, 22.05]","19.84 [16.00, 22.09]",Kruskal-Wallis H,0.977
+Kandhro 1 formula (KF1),"6.96 [6.56, 7.81]","7.01 [6.61, 7.70]",Kruskal-Wallis H,0.627
+Diagnosis Group - Control,318 (44.7%),137 (44.9%),Chi-square,1.000
+Diagnosis Group - Silent Thalassemia,120 (16.9%),51 (16.7%),,
+Diagnosis Group - Non-silent Thalassemia,181 (25.5%),78 (25.6%),,
+Diagnosis Group - Iron Deficiency Anemia,92 (12.9%),39 (12.8%),,

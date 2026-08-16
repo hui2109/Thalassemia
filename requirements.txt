@@ -1,14 +1,10 @@
-
-# 地中海贫血三分类预测模型 —— 依赖清单
-# 建议 Python 版本: 3.13
-# 安装方式: pip install -r requirements.txt
-
+pandas>=2.1
 numpy>=1.26
-pandas>=2.2
-scipy>=1.12
+scipy>=1.11
 scikit-learn>=1.4
-matplotlib>=3.8
 xgboost>=2.0
-lightgbm>=4.3
-shap>=0.45
+lightgbm>=4.1
+shap>=0.44
+matplotlib>=3.8
+seaborn>=0.13
 joblib>=1.3

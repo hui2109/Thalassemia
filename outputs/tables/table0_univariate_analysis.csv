@@ -1,0 +1,21 @@
+﻿variable,normal,homogeneous_variance,test_method,statistic,p_value,significant,p_value_display
+Shine and Lal(S&L),False,False,Kruskal-Wallis H,808.4826,6.259656252780918e-175,True,<0.001
+MCH,False,False,Kruskal-Wallis H,804.8037,3.9302939869089586e-174,True,<0.001
+MCV,False,False,Kruskal-Wallis H,788.9708,1.0670834008435881e-170,True,<0.001
+Srivastava formula (SF),False,False,Kruskal-Wallis H,676.4871,2.6327578249289227e-146,True,<0.001
+Mentzer(MI),False,False,Kruskal-Wallis H,624.9069,4.0153982296306637e-135,True,<0.001
+Kandhro 1 formula (KF1),False,False,Kruskal-Wallis H,613.7713,1.0420904724499192e-132,True,<0.001
+RDW-CV,False,False,Kruskal-Wallis H,605.3062,7.129750981483589e-131,True,<0.001
+Siridah index (SI),True,False,Kruskal-Wallis H,595.0189,1.2112422282256936e-128,True,<0.001
+HB,False,False,Kruskal-Wallis H,557.412,1.719166831823988e-120,True,<0.001
+Red Cell Distribution Width index (RDWI),False,False,Kruskal-Wallis H,490.0592,6.806734783958536e-106,True,<0.001
+RDW-SD,False,False,Kruskal-Wallis H,455.0889,2.574210911253213e-98,True,<0.001
+Green & King index (G&K),False,False,Kruskal-Wallis H,448.5021,6.883131975910333e-97,True,<0.001
+MCHC,False,False,Kruskal-Wallis H,437.7676,1.4572438686349e-94,True,<0.001
+England & Fraser index (E&F),True,False,Kruskal-Wallis H,423.4878,1.807944184089885e-91,True,<0.001
+HCT,False,False,Kruskal-Wallis H,397.863,6.427385368664421e-86,True,<0.001
+RBC,False,False,Kruskal-Wallis H,377.1191,1.9996549858654482e-81,True,<0.001
+Ricerca index (RI),False,False,Kruskal-Wallis H,285.6092,1.29448591842182e-61,True,<0.001
+PDW,False,False,Kruskal-Wallis H,36.2299,6.695349708733162e-08,True,<0.001
+PLT,False,False,Kruskal-Wallis H,34.6518,1.443080649420526e-07,True,<0.001
+age,False,False,Kruskal-Wallis H,1.7236,0.6316985947247005,False,0.632
