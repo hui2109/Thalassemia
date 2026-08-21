@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 settings.py
-全局配置文件：路径、随机种子、列名定义、类别标签等所有可能需要客户自行调整的常量都集中于此。
+全局配置文件：路径、随机种子、列名定义、类别标签等所有可能需要自行调整的常量都集中于此。
 把所有"魔法数字/字符串"都放在这里,方便后续二次开发时统一修改,而不必去每个模块里翻找。
 """
 
@@ -51,8 +51,8 @@ DERIVED_INDEX_CANDIDATES = [
     "Siridah index (SI)",
     "Srivastava formula (SF)",
     "Kandhro 1 formula (KF1)",
-    "Shine and Lal(S&L)",
-    "Mentzer(MI)",
+    "Shine and Lal (S&L)",
+    "Mentzer (MI)",
 ]
 
 # 从 9 个衍生指标中最终挑选进入模型的数量上限
@@ -86,4 +86,5 @@ MODEL_DISPLAY_NAMES = {
 MODEL_ORDER = list(MODEL_DISPLAY_NAMES.keys())
 
 # 需要做 SHAP 解释的模型（树模型速度快，优先展示；如需全部展示可自行把列表补全）
-SHAP_MODELS = ["DecisionTree", "RandomForest", "XGBoost", "LightGBM"]
+# SHAP_MODELS = ["DecisionTree", "RandomForest", "XGBoost", "LightGBM"]
+SHAP_MODELS = list(MODEL_DISPLAY_NAMES.keys())

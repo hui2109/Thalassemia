@@ -11,19 +11,19 @@ Decision Tree,Control,0.403,0.44
 Decision Tree,Silent Thalassemia,0.301,-0.592
 Decision Tree,Non-silent Thalassemia,0.363,0.171
 Decision Tree,Iron Deficiency Anemia,0.277,-0.637
-Random Forest,Control,1.209,-0.114
-Random Forest,Silent Thalassemia,1.185,0.069
-Random Forest,Non-silent Thalassemia,1.092,-0.1
-Random Forest,Iron Deficiency Anemia,0.981,0.152
-XGBoost,Control,1.675,-0.195
-XGBoost,Silent Thalassemia,1.517,0.485
-XGBoost,Non-silent Thalassemia,1.535,-0.207
-XGBoost,Iron Deficiency Anemia,1.335,0.737
+Random Forest,Control,1.198,-0.114
+Random Forest,Silent Thalassemia,1.169,0.068
+Random Forest,Non-silent Thalassemia,1.091,-0.053
+Random Forest,Iron Deficiency Anemia,0.954,0.107
+XGBoost,Control,1.997,-0.102
+XGBoost,Silent Thalassemia,1.686,0.75
+XGBoost,Non-silent Thalassemia,2.072,0.398
+XGBoost,Iron Deficiency Anemia,1.628,0.985
 LightGBM,Control,1.136,-0.215
 LightGBM,Silent Thalassemia,1.079,0.121
 LightGBM,Non-silent Thalassemia,1.052,-0.371
 LightGBM,Iron Deficiency Anemia,0.997,0.363
-Multilayer Perceptron,Control,1.158,-0.015
-Multilayer Perceptron,Silent Thalassemia,0.977,-0.064
-Multilayer Perceptron,Non-silent Thalassemia,0.665,0.658
-Multilayer Perceptron,Iron Deficiency Anemia,0.53,-0.791
+Multilayer Perceptron,Control,1.138,0.18
+Multilayer Perceptron,Silent Thalassemia,0.965,-0.21
+Multilayer Perceptron,Non-silent Thalassemia,0.659,0.636
+Multilayer Perceptron,Iron Deficiency Anemia,0.516,-0.781

@@ -1,7 +1,7 @@
 ﻿variable,p_value,kept,reason
-Shine and Lal(S&L),6.259656252780918e-175,True,"Statistically significant and independent, selected"
-Srivastava formula (SF),2.6327578249289227e-146,False,"Highly correlated (|r|>=0.9) with selected index ['Shine and Lal(S&L)'], redundant"
-Mentzer(MI),4.0153982296306637e-135,True,"Statistically significant and independent, selected"
+Shine and Lal (S&L),6.259656252780918e-175,True,"Statistically significant and independent, selected"
+Srivastava formula (SF),2.6327578249289227e-146,False,"Highly correlated (|r|>=0.9) with selected index ['Shine and Lal (S&L)'], redundant"
+Mentzer (MI),4.0153982296306637e-135,True,"Statistically significant and independent, selected"
 Kandhro 1 formula (KF1),1.0420904724499192e-132,True,"Statistically significant and independent, selected"
 Siridah index (SI),1.2112422282256936e-128,False,Reached maximum number of selected indices
 Red Cell Distribution Width index (RDWI),6.806734783958536e-106,False,Reached maximum number of selected indices

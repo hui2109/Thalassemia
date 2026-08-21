@@ -1,9 +1,9 @@
 ﻿variable,normal,homogeneous_variance,test_method,statistic,p_value,significant,p_value_display
-Shine and Lal(S&L),False,False,Kruskal-Wallis H,808.4826,6.259656252780918e-175,True,<0.001
+Shine and Lal (S&L),False,False,Kruskal-Wallis H,808.4826,6.259656252780918e-175,True,<0.001
 MCH,False,False,Kruskal-Wallis H,804.8037,3.9302939869089586e-174,True,<0.001
 MCV,False,False,Kruskal-Wallis H,788.9708,1.0670834008435881e-170,True,<0.001
 Srivastava formula (SF),False,False,Kruskal-Wallis H,676.4871,2.6327578249289227e-146,True,<0.001
-Mentzer(MI),False,False,Kruskal-Wallis H,624.9069,4.0153982296306637e-135,True,<0.001
+Mentzer (MI),False,False,Kruskal-Wallis H,624.9069,4.0153982296306637e-135,True,<0.001
 Kandhro 1 formula (KF1),False,False,Kruskal-Wallis H,613.7713,1.0420904724499192e-132,True,<0.001
 RDW-CV,False,False,Kruskal-Wallis H,605.3062,7.129750981483589e-131,True,<0.001
 Siridah index (SI),True,False,Kruskal-Wallis H,595.0189,1.2112422282256936e-128,True,<0.001

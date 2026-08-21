@@ -4,7 +4,7 @@ trainer.py
 统一负责"5 折交叉验证 + 超参数搜索 + 训练"这一整套流程。
 
 用类结构 ModelTrainer 封装,是因为训练过程需要维护一些状态（已训练模型、
-CV 最优参数、CV 分数等），用类比一堆散装函数更清晰，也方便客户以后
+CV 最优参数、CV 分数等），用类比一堆散装函数更清晰，也方便以后
 想单独重训某一个模型，或者把训练好的模型序列化保存/加载。
 """
 
@@ -33,7 +33,7 @@ class ModelTrainer:
         最优超参数对应的 5 折交叉验证平均得分（macro-F1）。
     """
 
-    def __init__(self, model_name, n_cv_folds=None, n_iter_random=40, scoring="f1_macro"):
+    def __init__(self, model_name, n_cv_folds=None, n_iter_random=80, scoring="f1_macro"):
         """
         Parameters
         ----------

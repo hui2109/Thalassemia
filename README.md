@@ -43,7 +43,7 @@ thalassemia_pred/
 │   ├── bootstrap.py              # Bootstrap 重采样置信区间计算
 │   └── model_comparison.py       # 训练/测试对比表、Bootstrap 对比表
 ├── visualization/
-│   ├── style.py                  # 全局绘图风格（中文字体等）
+│   ├── style.py                  # 全局绘图风格
 │   ├── roc_plots.py              # ROC 曲线
 │   ├── calibration_plots.py      # 校准曲线 + 校准斜率/截距
 │   ├── decision_curve.py         # 决策曲线分析 (DCA)

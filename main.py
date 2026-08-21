@@ -18,8 +18,8 @@ main.py
     Step 10: ROC Curves / Calibration Curves (with Slope & Intercept) / Decision Curves / Confusion Matrices
     Step 11: SHAP Interpretability Analysis (Summary + Bar Plots)
 
-本脚本刻意保持"平铺直叙"的写法（而非包一层 run_pipeline() 函数），
-方便客户直接阅读、在任意一步之后插入自己的代码、或注释掉不需要的步骤。
+本脚本刻意保持 '平铺直叙' 的写法（而非包一层 run_pipeline() 函数），
+方便直接阅读、在任意一步之后插入自己的代码、或注释掉不需要的步骤。
 所有具体计算逻辑都已拆分到各个子模块中，本文件只负责"调用 + 编排 + 保存结果"。
 """
 
@@ -139,7 +139,7 @@ print("=" * 60)
 trainers = train_all_models(X_train, y_train)
 
 for name, trainer in trainers.items():
-    trainer.save()  # 保存到 settings.MODEL_DIR/{name}.joblib，方便客户直接加载复用
+    trainer.save()  # 保存到 settings.MODEL_DIR/{name}.joblib，方便直接加载复用
 
 # =============================================================================
 # Step 8: Model Performance Comparison Table - Train vs Test
@@ -205,7 +205,9 @@ print("Step 11: SHAP interpretability analysis")
 print("=" * 60)
 
 # 背景数据从训练集中抽样，兼顾计算速度与精度；如需更精确可放大样本量
-shap_background = X_train.sample(n=min(100, len(X_train)), random_state=settings.RANDOM_STATE)
+# 注意：非树模型（LR/SVC/MLP）走模型无关的 Permutation Explainer，
+# shap_plots.py 内部还会再自动下采样到 max_background 条，这里只需给出一个不太大的候选池即可
+shap_background = X_train.sample(n=min(len(X_train), 500), random_state=settings.RANDOM_STATE)
 
 for model_name in settings.SHAP_MODELS:
     if model_name not in trainers:
@@ -217,7 +219,7 @@ for model_name in settings.SHAP_MODELS:
         X_explain=X_test,
         feature_names=FEATURE_COLS,
         model_name=model_name,
-        class_index=2,  # 默认解释"非静止型地贫"类别，可按需修改为 0/1/2/3
+        class_index=1,  # 默认解释"静止型地贫"类别, 可按需修改为 0/1/2/3
     )
 
 print("\n" + "=" * 60)

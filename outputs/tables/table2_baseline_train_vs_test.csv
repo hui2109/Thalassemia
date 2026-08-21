@@ -10,8 +10,8 @@ RDW-SD,"42.00 [39.70, 45.10]","42.40 [39.40, 45.00]",Kruskal-Wallis H,0.869
 RDW-CV,"13.70 [12.90, 15.35]","13.80 [13.00, 15.10]",Kruskal-Wallis H,0.623
 PLT,"201.00 [165.00, 243.00]","207.00 [161.00, 248.00]",Kruskal-Wallis H,0.389
 PDW,"16.30 [16.00, 16.60]","16.30 [15.90, 16.70]",Kruskal-Wallis H,0.966
-Shine and Lal(S&L),"2068.83 [1209.23, 2567.34]","2102.79 [1205.60, 2577.99]",Kruskal-Wallis H,0.895
-Mentzer(MI),"19.70 [16.13, 22.05]","19.84 [16.00, 22.09]",Kruskal-Wallis H,0.977
+Shine and Lal (S&L),"2068.83 [1209.23, 2567.34]","2102.79 [1205.60, 2577.99]",Kruskal-Wallis H,0.895
+Mentzer (MI),"19.70 [16.13, 22.05]","19.84 [16.00, 22.09]",Kruskal-Wallis H,0.977
 Kandhro 1 formula (KF1),"6.96 [6.56, 7.81]","7.01 [6.61, 7.70]",Kruskal-Wallis H,0.627
 Diagnosis Group - Control,318 (44.7%),137 (44.9%),Chi-square,1.000
 Diagnosis Group - Silent Thalassemia,120 (16.9%),51 (16.7%),,

@@ -94,11 +94,11 @@ def _build_random_forest():
         "clf__min_samples_leaf": [1, 2, 4, 8],
         "clf__max_features": ["sqrt", "log2", None],
     }
-    return pipeline, param_distributions, "random"
+    return pipeline, param_distributions, "grid"
 
 
 def _build_xgboost():
-    """XGBoost 多分类（softprob）。延迟导入，避免客户环境未安装时影响其它模型运行。"""
+    """XGBoost 多分类（softprob）。延迟导入，避免环境未安装时影响其它模型运行。"""
     from xgboost import XGBClassifier
 
     n_classes = len(settings.CLASS_ORDER)
@@ -119,7 +119,7 @@ def _build_xgboost():
         "clf__colsample_bytree": [0.6, 0.8, 1.0],
         "clf__reg_lambda": [0.1, 1, 5, 10],
     }
-    return pipeline, param_distributions, "random"
+    return pipeline, param_distributions, "grid"
 
 
 def _build_lightgbm():
@@ -151,7 +151,7 @@ def _build_mlp():
     pipeline = Pipeline([
         ("scaler", StandardScaler()),
         ("clf", MLPClassifier(
-            max_iter=2000,
+            max_iter=4000,
             early_stopping=True,
             random_state=settings.RANDOM_STATE,
         )),
@@ -160,7 +160,7 @@ def _build_mlp():
         "clf__hidden_layer_sizes": [(32,), (64,), (32, 16), (64, 32), (64, 32, 16)],
         "clf__activation": ["relu", "tanh"],
         "clf__alpha": [1e-4, 1e-3, 1e-2, 1e-1],
-        "clf__learning_rate_init": [1e-3, 5e-3, 1e-2],
+        "clf__learning_rate_init": [1e-4, 5e-4, 1e-3, 5e-3, 1e-2, 5e-2, 1e-1, 5e-1],
     }
     return pipeline, param_distributions, "random"
 
