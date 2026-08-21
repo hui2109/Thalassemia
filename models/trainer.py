@@ -105,7 +105,7 @@ class ModelTrainer:
             保存路径，默认 settings.MODEL_DIR / f"{model_name}.joblib"。
         """
         path = path or (settings.MODEL_DIR / f"{self.model_name}.joblib")
-        joblib.dump(self.best_estimator_, path)
+        joblib.dump(self, path)
         return path
 
 

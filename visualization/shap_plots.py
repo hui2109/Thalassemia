@@ -14,12 +14,11 @@ shap_plots.py
       直接对整条 Pipeline 的 predict_proba 做黑盒解释，天然兼容 Pipeline 内部的
       标准化等预处理步骤，不需要手动处理特征变换。
 
-      注意：模型无关方法比 TreeExplainer 慢得多（每个样本需要多次调用 predict_proba），
-      因此本模块默认会自动：
-        1) 把背景数据集下采样到 max_background 条（默认 50）；
-        2) 把待解释数据集下采样到 max_explain 条（默认 100，设为 None 则不采样，
-           但样本量大 + 特征多时可能非常慢，不建议在全量测试集上直接跑 SVC/MLP）。
-      如果你的机器性能较好、希望结果更稳定，可以把这两个参数调大。
+      注意：模型无关方法比 TreeExplainer 慢得多（每个样本需要多次调用 predict_proba）。
+      本模块默认 max_background / max_explain 均为 None（不限制样本量，使用你传入的
+      全部背景数据 / 待解释数据），如果机器性能一般、跑起来太慢，可以在调用
+      generate_shap_report() 时显式传入 max_background / max_explain（如各设为 100）
+      做下采样以提速。
 
 由于本任务是四分类问题，SHAP 值形状为 (n_samples, n_features, n_classes)；
 默认展示"静止型地贫"（类别 1，通常是临床最关心的阳性类别）对应的 SHAP 贡献，
@@ -85,7 +84,7 @@ def compute_tree_shap_values(pipeline, X_background, X_explain):
 
 
 def compute_model_agnostic_shap_values(pipeline, X_background, X_explain,
-                                       max_background=500, max_explain=None,
+                                       max_background=None, max_explain=None,
                                        algorithm="permutation"):
     """
     对非树模型（Logistic Regression / SVC / MLP 等）使用模型无关的 SHAP 方法。
@@ -99,14 +98,19 @@ def compute_model_agnostic_shap_values(pipeline, X_background, X_explain,
     pipeline : sklearn.pipeline.Pipeline
         训练好的完整 Pipeline（预处理 + 分类器）。
     X_background : pandas.DataFrame
-        背景数据集，函数内部会自动下采样到最多 max_background 条
-        （Kernel/Permutation SHAP 的标准做法：几十条样本通常已足以稳定估计基线期望）。
+        背景数据集。若 max_background 为 None（默认），使用全部传入样本，
+        不做任何下采样；否则下采样到最多 max_background 条。
     X_explain : pandas.DataFrame
-        待解释数据集，函数内部会自动下采样到最多 max_explain 条。
-    max_background : int, optional
-        背景集下采样上限，默认 50。
+        待解释数据集。若 max_explain 为 None（默认），使用全部传入样本；
+        否则下采样到最多 max_explain 条。
+    max_background : int or None, optional
+        背景集下采样上限，默认 None（不限制，使用全部背景数据）。
+        注意：这里同时会显式构造 shap.maskers.Independent(background,
+        max_samples=len(background))，避免 shap 内部 masker 自身默认
+        max_samples=100 的硬编码上限把背景集又偷偷截断回 100 条。
     max_explain : int or None, optional
-        待解释集下采样上限，默认 100；设为 None 则使用全部传入样本（可能很慢）。
+        待解释集下采样上限，默认 None（不限制，使用全部传入样本）。
+        样本量、特征数都较大时模型无关方法会比较慢，机器性能足够可以不设限。
     algorithm : str, optional
         传给 shap.Explainer 的算法名，默认 "permutation"（速度与精度较均衡，
         对多分类 predict_proba 输出兼容性好）。
@@ -116,7 +120,7 @@ def compute_model_agnostic_shap_values(pipeline, X_background, X_explain,
     shap.Explanation
         形状 (n_samples, n_features, n_classes) 的 SHAP 解释对象。
     """
-    if len(X_background) > max_background:
+    if max_background is not None and len(X_background) > max_background:
         background = shap.sample(X_background, max_background, random_state=settings.RANDOM_STATE)
     else:
         background = X_background
@@ -124,7 +128,12 @@ def compute_model_agnostic_shap_values(pipeline, X_background, X_explain,
     if max_explain is not None and len(X_explain) > max_explain:
         X_explain = X_explain.sample(n=max_explain, random_state=settings.RANDOM_STATE)
 
-    explainer = shap.Explainer(pipeline.predict_proba, background, algorithm=algorithm)
+    # 显式构造 masker 并把 max_samples 设成背景集实际大小，
+    # 否则 shap.Explainer 内部会自己再套一层 max_samples=100 的默认上限，
+    # 即使传入的 background 有几百条也会被悄悄截断到 100 条（日志里的
+    # "Subsampling to 100 samples" 提示就是这里触发的）。
+    masker = shap.maskers.Independent(background, max_samples=len(background))
+    explainer = shap.Explainer(pipeline.predict_proba, masker, algorithm=algorithm)
 
     # Permutation explainer 需要足够的 max_evals（至少 2*n_features+1），否则部分
     # shap 版本会直接报错要求你手动指定；这里按特征数自动给出一个安全值。
@@ -182,7 +191,7 @@ def plot_shap_summary(shap_explanation, class_index, class_label, save_path=None
     class_slice = _extract_class_slice(shap_explanation, class_index)
 
     fig = plt.figure(figsize=(8, 6))
-    shap.summary_plot(class_slice, show=False)
+    shap.summary_plot(class_slice, show=False, rng=settings.RANDOM_STATE)
     plt.title(f"SHAP Summary Plot — Class: {class_label}", fontsize=12)
     plt.tight_layout()
 
@@ -220,7 +229,7 @@ def plot_shap_bar(shap_explanation, class_index, class_label, save_path=None):
 
 def generate_shap_report(pipeline, X_background, X_explain, feature_names,
                          model_name, class_index=1, class_label=None,
-                         figure_dir=None, max_background=500, max_explain=None,
+                         figure_dir=None, max_background=None, max_explain=None,
                          algorithm="permutation"):
     """
     一站式生成某个模型的 SHAP 摘要图 + 条形图，并保存到磁盘。
@@ -244,10 +253,10 @@ def generate_shap_report(pipeline, X_background, X_explain, feature_names,
         默认根据 settings.CLASS_LABELS 自动推断。
     figure_dir : str or Path, optional
         默认使用 settings.FIGURE_DIR。
-    max_background : int, optional
-        仅对非树模型生效，背景集下采样上限，默认 50。
+    max_background : int or None, optional
+        仅对非树模型生效，背景集下采样上限，默认 None（不限制，使用全部背景数据）。
     max_explain : int or None, optional
-        仅对非树模型生效，待解释集下采样上限，默认 100。
+        仅对非树模型生效，待解释集下采样上限，默认 None（不限制，使用全部待解释数据）。
     algorithm : str, optional
         仅对非树模型生效，传给 shap.Explainer 的算法名，默认 "permutation"。
 

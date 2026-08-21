@@ -207,7 +207,7 @@ print("=" * 60)
 # 背景数据从训练集中抽样，兼顾计算速度与精度；如需更精确可放大样本量
 # 注意：非树模型（LR/SVC/MLP）走模型无关的 Permutation Explainer，
 # shap_plots.py 内部还会再自动下采样到 max_background 条，这里只需给出一个不太大的候选池即可
-shap_background = X_train.sample(n=min(len(X_train), 500), random_state=settings.RANDOM_STATE)
+shap_background = X_train.sample(n=len(X_train), random_state=settings.RANDOM_STATE)
 
 for model_name in settings.SHAP_MODELS:
     if model_name not in trainers:

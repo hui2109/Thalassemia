@@ -15,10 +15,10 @@ Random Forest,Control,1.198,-0.114
 Random Forest,Silent Thalassemia,1.169,0.068
 Random Forest,Non-silent Thalassemia,1.091,-0.053
 Random Forest,Iron Deficiency Anemia,0.954,0.107
-XGBoost,Control,1.997,-0.102
-XGBoost,Silent Thalassemia,1.686,0.75
-XGBoost,Non-silent Thalassemia,2.072,0.398
-XGBoost,Iron Deficiency Anemia,1.628,0.985
+XGBoost,Control,1.39,-0.197
+XGBoost,Silent Thalassemia,1.325,0.316
+XGBoost,Non-silent Thalassemia,1.284,-0.251
+XGBoost,Iron Deficiency Anemia,1.211,0.467
 LightGBM,Control,1.136,-0.215
 LightGBM,Silent Thalassemia,1.079,0.121
 LightGBM,Non-silent Thalassemia,1.052,-0.371
