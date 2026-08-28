@@ -22,6 +22,38 @@ METRIC_DISPLAY_NAMES = {
     "specificity": "Specificity",
     "ppv": "PPV",
     "npv": "NPV",
+
+    "acc_per_class_0": 'Accuracy_0',
+    "auc_per_class_0": 'AUC_0',
+    "f1_per_class_0": 'F1_0',
+    "sensitivity_0": 'Sensitivity_0',
+    "specificity_0": 'Specificity_0',
+    "ppv_0": 'PPV_0',
+    "npv_0": 'NPV_0',
+
+    "acc_per_class_1": 'Accuracy_1',
+    "auc_per_class_1": 'AUC_1',
+    "f1_per_class_1": 'F1_1',
+    "sensitivity_1": 'Sensitivity_1',
+    "specificity_1": 'Specificity_1',
+    "ppv_1": 'PPV_1',
+    "npv_1": 'NPV_1',
+
+    "acc_per_class_2": 'Accuracy_2',
+    "auc_per_class_2": 'AUC_2',
+    "f1_per_class_2": 'F1_2',
+    "sensitivity_2": 'Sensitivity_2',
+    "specificity_2": 'Specificity_2',
+    "ppv_2": 'PPV_2',
+    "npv_2": 'NPV_2',
+
+    "acc_per_class_3": 'Accuracy_3',
+    "auc_per_class_3": 'AUC_3',
+    "f1_per_class_3": 'F1_3',
+    "sensitivity_3": 'Sensitivity_3',
+    "specificity_3": 'Specificity_3',
+    "ppv_3": 'PPV_3',
+    "npv_3": 'NPV_3',
 }
 
 

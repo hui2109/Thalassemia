@@ -9,7 +9,7 @@ metrics.py
 
 import numpy as np
 from sklearn.metrics import (
-    accuracy_score, f1_score, roc_auc_score, confusion_matrix,
+    accuracy_score, f1_score, roc_auc_score, confusion_matrix, recall_score,
 )
 
 from config import settings
@@ -125,15 +125,53 @@ def compute_all_metrics(y_true, y_pred, y_proba, classes=None):
     """
     classes = classes or settings.CLASS_ORDER
 
-    ssp = sensitivity_specificity_ppv_npv(y_true, y_pred, classes)["macro"]
+    sspn = sensitivity_specificity_ppv_npv(y_true, y_pred, classes)
+    sspn_macro = sspn["macro"]
+    sspn_per_class = sspn["per_class"]
+
+    f1_per_class = f1_score(y_true, y_pred, labels=classes, average=None)
+    auc_per_class = roc_auc_score(y_true, y_proba, multi_class="ovr", average=None, labels=classes)
+    acc_per_class = recall_score(y_true, y_pred, labels=classes, average=None)
 
     return {
         "accuracy": accuracy_score(y_true, y_pred),
         "macro_auc": macro_auc_ovr(y_true, y_proba, classes),
         "macro_f1": f1_score(y_true, y_pred, labels=classes, average="macro"),
         "weighted_f1": f1_score(y_true, y_pred, labels=classes, average="weighted"),
-        "sensitivity": ssp["sensitivity"],
-        "specificity": ssp["specificity"],
-        "ppv": ssp["ppv"],
-        "npv": ssp["npv"],
+        "sensitivity": sspn_macro["sensitivity"],
+        "specificity": sspn_macro["specificity"],
+        "ppv": sspn_macro["ppv"],
+        "npv": sspn_macro["npv"],
+
+        "sensitivity_0": sspn_per_class[0]["sensitivity"],
+        "specificity_0": sspn_per_class[0]["specificity"],
+        "ppv_0": sspn_per_class[0]["ppv"],
+        "npv_0": sspn_per_class[0]["npv"],
+        "f1_per_class_0": f1_per_class[0],
+        "auc_per_class_0": auc_per_class[0],
+        "acc_per_class_0": acc_per_class[0],
+
+        "sensitivity_1": sspn_per_class[1]["sensitivity"],
+        "specificity_1": sspn_per_class[1]["specificity"],
+        "ppv_1": sspn_per_class[1]["ppv"],
+        "npv_1": sspn_per_class[1]["npv"],
+        "f1_per_class_1": f1_per_class[1],
+        "auc_per_class_1": auc_per_class[1],
+        "acc_per_class_1": acc_per_class[1],
+
+        "sensitivity_2": sspn_per_class[2]["sensitivity"],
+        "specificity_2": sspn_per_class[2]["specificity"],
+        "ppv_2": sspn_per_class[2]["ppv"],
+        "npv_2": sspn_per_class[2]["npv"],
+        "f1_per_class_2": f1_per_class[2],
+        "auc_per_class_2": auc_per_class[2],
+        "acc_per_class_2": acc_per_class[2],
+
+        "sensitivity_3": sspn_per_class[3]["sensitivity"],
+        "specificity_3": sspn_per_class[3]["specificity"],
+        "ppv_3": sspn_per_class[3]["ppv"],
+        "npv_3": sspn_per_class[3]["npv"],
+        "f1_per_class_3": f1_per_class[3],
+        "auc_per_class_3": auc_per_class[3],
+        "acc_per_class_3": acc_per_class[3],
     }
