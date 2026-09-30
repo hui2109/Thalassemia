@@ -65,9 +65,9 @@ DERIVED_INDEX_CORR_THRESHOLD = 0.9
 # ---------------------------------------------------------------------------
 CLASS_LABELS = {
     0: "Control",
-    1: "Silent Thalassemia",
-    2: "Non-silent Thalassemia",
-    3: "Iron Deficiency Anemia",
+    1: "NTT",
+    2: "MTT",
+    3: "IDA",
 }
 CLASS_ORDER = [0, 1, 2, 3]
 
