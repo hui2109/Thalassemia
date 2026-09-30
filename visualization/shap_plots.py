@@ -170,34 +170,121 @@ def _extract_class_slice(shap_explanation, class_index):
     return shap_explanation
 
 
-def plot_shap_summary(shap_explanation, class_index, class_label, save_path=None):
-    """
-    绘制 SHAP 摘要图（蜂群图 beeswarm），展示每个特征对预测该类别概率的影响方向与大小。
+def plot_shap_summary(shap_explanation, class_index, class_label, save_path=None, dpi=600):
+    """Plot a publication-ready, class-specific SHAP beeswarm.
 
-    Parameters
-    ----------
-    shap_explanation : shap.Explanation
-        compute_tree_shap_values() / compute_model_agnostic_shap_values() 的输出。
-    class_index : int
-        目标类别索引。
-    class_label : str
-        用于图标题的类别名称。
-    save_path : str or Path, optional
-
-    Returns
-    -------
-    matplotlib.figure.Figure
+    Display the available features from BASE_FEATURES_New and
+    DERIVED_INDEX_CANDIDATES_New. The original feature names and model inputs
+    are not changed: age is hidden and full derived-index names are shortened
+    only in this figure. ``dpi`` applies to raster exports (minimum 600).
     """
+    from pathlib import Path
+
+    from matplotlib import font_manager
+    from matplotlib.colors import LinearSegmentedColormap
+
+    if save_path is not None and dpi < 600:
+        raise ValueError("Publication exports require dpi >= 600.")
+
     class_slice = _extract_class_slice(shap_explanation, class_index)
+    values = np.asarray(class_slice.values)
+    if values.ndim != 2 or values.shape[0] == 0:
+        raise ValueError("The selected class must have a nonempty 2D SHAP matrix.")
 
-    fig = plt.figure(figsize=(8, 6))
-    shap.summary_plot(class_slice, show=False, rng=settings.RANDOM_STATE)
-    plt.title(f"SHAP Summary Plot — Class: {class_label}", fontsize=12)
-    plt.tight_layout()
+    names = class_slice.feature_names
+    if names is None and hasattr(class_slice.data, "columns"):
+        names = class_slice.data.columns
+    if names is None or len(names) != values.shape[1]:
+        raise ValueError("Feature names must match the columns of the SHAP values.")
 
-    if save_path:
-        fig.savefig(save_path, dpi=300, bbox_inches="tight")
-    return fig
+    aliases = dict(zip(settings.DERIVED_INDEX_CANDIDATES,
+                       settings.DERIVED_INDEX_CANDIDATES_New, strict=True))
+    allowed = set(settings.BASE_FEATURES_New + settings.DERIVED_INDEX_CANDIDATES_New)
+    display_names = [aliases.get(str(name), str(name)) for name in names]
+    unknown = sorted(set(display_names) - allowed - {"age"})
+    if unknown:
+        raise ValueError(f"Unexpected SHAP feature names: {unknown!r}")
+    keep = [i for i, name in enumerate(display_names) if name in allowed]
+    shown_names = [display_names[i] for i in keep]
+    if not keep or len(shown_names) != len(set(shown_names)):
+        raise ValueError("No unique features remain after selecting the new feature set.")
+
+    data = class_slice.data
+    if data is not None:
+        data = np.asarray(data)
+        if data.shape != values.shape:
+            raise ValueError("Feature data must match the SHAP value matrix.")
+        data = data[:, keep]
+    plot_values = shap.Explanation(
+        values=values[:, keep], data=data, feature_names=shown_names,
+    )
+
+    # ROC figure palette: low feature values in blue, high values in red.
+    palette = LinearSegmentedColormap.from_list(
+        "roc_blue_to_red", ("#3C5488", "#E4E9EC", "#E64B35"), N=256,
+    )
+    preferred_font = (
+        "Times New Roman" if any(f.name == "Times New Roman"
+                                 for f in font_manager.fontManager.ttflist)
+        else "DejaVu Serif"
+    )
+    with plt.rc_context({
+        "font.family": preferred_font,
+        "font.size": 10,
+        "axes.unicode_minus": False,
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
+        "svg.fonttype": "none",
+        "savefig.facecolor": "white",
+    }):
+        fig, ax = plt.subplots(figsize=(8.6, max(5.5, 2.2 + 0.36 * len(keep))))
+        fig.patch.set_facecolor("white")
+        try:
+            plt.sca(ax)
+            shap.plots.beeswarm(
+                plot_values, max_display=len(keep), color=palette,
+                axis_color="#45515A", alpha=0.82, s=14,
+                color_bar=True, color_bar_label="Feature value",
+                plot_size=None, show=False,
+            )
+
+            # SHAP creates its own colorbar; position both axes explicitly to
+            # keep all feature names and the legend clear at journal size.
+            ax.set_position((0.18, 0.115, 0.64, 0.76))
+            ax.set_title(f"SHAP summary ({class_label})", loc="left",
+                         fontsize=14, fontweight="bold", color="#253746", pad=16)
+            ax.set_xlabel("SHAP value (impact on model output)",
+                          fontsize=10.2, color="#253746", labelpad=9)
+            ax.set_ylabel("")
+            ax.set_axisbelow(True)
+            ax.grid(axis="x", color="#E4E9EC", linewidth=0.7, zorder=0)
+            for side in ("top", "right"):
+                ax.spines[side].set_visible(False)
+            for side in ("bottom", "left"):
+                ax.spines[side].set_visible(True)
+                ax.spines[side].set_color("#68747D")
+                ax.spines[side].set_linewidth(0.8)
+            ax.tick_params(axis="x", labelsize=9, length=3.5,
+                           width=0.8, colors="#45515A")
+            ax.tick_params(axis="y", labelsize=9.2, length=0,
+                           colors="#45515A", pad=7)
+
+            if len(fig.axes) > 1:
+                color_ax = fig.axes[-1]
+                color_ax.set_position((0.87, 0.25, 0.022, 0.50))
+                color_ax.tick_params(labelsize=8.8, length=0, colors="#45515A")
+                color_ax.yaxis.label.set_color("#45515A")
+                color_ax.yaxis.label.set_size(9.2)
+                color_ax.yaxis.label.set_fontfamily(preferred_font)
+
+            if save_path is not None:
+                save_path = Path(save_path)
+                save_path.parent.mkdir(parents=True, exist_ok=True)
+                fig.savefig(save_path, dpi=dpi, bbox_inches="tight", pad_inches=0.16)
+        except Exception:
+            plt.close(fig)
+            raise
+        return fig
 
 
 def plot_shap_bar(shap_explanation, class_index, class_label, save_path=None):

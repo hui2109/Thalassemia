@@ -41,6 +41,11 @@ BASE_FEATURES = [
     "MCHC", "RDW-SD", "RDW-CV", "PLT", "PDW",
 ]
 
+BASE_FEATURES_New = [
+    "RBC", "HB", "HCT", "MCV", "MCH",
+    "MCHC", "RDW-SD", "RDW-CV", "PLT", "PDW",
+]
+
 # 9 个衍生地贫筛查指数：由血常规原始指标计算得出，彼此高度共线，
 # 不能全部入模，需通过单因素分析 + 相关性分析挑选 2~3 个最具统计学意义且信息冗余最小的指标。
 DERIVED_INDEX_CANDIDATES = [
@@ -53,6 +58,18 @@ DERIVED_INDEX_CANDIDATES = [
     "Kandhro 1 formula (KF1)",
     "Shine and Lal (S&L)",
     "Mentzer (MI)",
+]
+
+DERIVED_INDEX_CANDIDATES_New = [
+    "E&F",
+    "G&K",
+    "RDWI",
+    "RI",
+    "SI",
+    "SF",
+    "KF1",
+    "S&L",
+    "Mentzer",
 ]
 
 # 从 9 个衍生指标中最终挑选进入模型的数量上限
