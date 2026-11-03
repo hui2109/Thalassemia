@@ -199,6 +199,7 @@ def plot_shap_summary(shap_explanation, class_index, class_label, save_path=None
 
     aliases = dict(zip(settings.DERIVED_INDEX_CANDIDATES,
                        settings.DERIVED_INDEX_CANDIDATES_New, strict=True))
+    aliases['HB'] = 'Hb'
     allowed = set(settings.BASE_FEATURES_New + settings.DERIVED_INDEX_CANDIDATES_New)
     display_names = [aliases.get(str(name), str(name)) for name in names]
     unknown = sorted(set(display_names) - allowed - {"age"})

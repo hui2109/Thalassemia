@@ -42,7 +42,7 @@ BASE_FEATURES = [
 ]
 
 BASE_FEATURES_New = [
-    "RBC", "HB", "HCT", "MCV", "MCH",
+    "RBC", "Hb", "HCT", "MCV", "MCH",
     "MCHC", "RDW-SD", "RDW-CV", "PLT", "PDW",
 ]
 
@@ -67,9 +67,9 @@ DERIVED_INDEX_CANDIDATES_New = [
     "RI",
     "SI",
     "SF",
-    "KF1",
+    "Kandhro1",
     "S&L",
-    "Mentzer",
+    "MI",
 ]
 
 # 从 9 个衍生指标中最终挑选进入模型的数量上限
